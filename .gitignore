@@ -1,0 +1,6 @@
+*.idea
+*.pyc
+*.ipynb
+temp
+build
+venv

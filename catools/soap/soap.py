@@ -10,7 +10,7 @@ import yaml
 from suds.client import Client
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(logging.NullHandler())
 
 
@@ -69,8 +69,10 @@ class SoapResponse(object):
         converts raw xml to dictionary
         :return:
         """
-        return extract_fields(objXML=self.response, attribute_only=self.attribute_only)
-
+        if self.response:
+            return extract_fields(objXML=self.response, attribute_only=self.attribute_only)
+        else:
+            return {}
 
 class SoapService(object):
     def __init__(self, session, service_name):
@@ -168,7 +170,7 @@ class SoapAPI(object):
 
     def searchObjects(self, objType, searchCriteria, maxRows=-1, returnAttributes=None):
         returnAttributes = returnAttributes if returnAttributes else []
-        return self.doSelect(objType, searchCriteria, maxRows, attributes=returnAttributes)
+        return self.doSelect(objType, searchCriteria, maxRows, attributes=returnAttributes).to_dict()
 
     def updateObject(self, obj_handle, attribute_changes, return_attributes=None):
         attribute_changes = self.createArrayOfString(attribute_changes)

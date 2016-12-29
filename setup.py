@@ -8,7 +8,7 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='CA Tools',
+    name='CATools',
     version=catools.__version__,
     packages=find_packages(exclude=('tests', 'docs')),
     url='https://github.com/jsarver/catools',

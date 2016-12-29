@@ -4,3 +4,9 @@
 temp
 build
 venv
+/test_config.yaml
+.cache/
+catools/__pycache__/
+catools/soap/__pycache__/
+test_config.yaml
+tests/__pycache__/

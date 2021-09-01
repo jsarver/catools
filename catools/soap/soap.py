@@ -172,6 +172,19 @@ class SoapAPI(object):
         returnAttributes = returnAttributes if returnAttributes else []
         return self.doSelect(objType, searchCriteria, maxRows, attributes=returnAttributes).to_dict()
 
+    def searchObjects_250(self, objType, searchCriteria, returnAttributes=None):
+        returnAttributes = returnAttributes if returnAttributes else []
+        query=self.cl.service.doQuery(self.sid, objType, searchCriteria)
+        return_obj=[]
+        for x in range(0,query.listLength+1,250):
+               max=x+249
+               if (max > query.listLength-1):
+                    max=query.listLength-1
+               if (x < query.listLength):
+                    return_obj=return_obj+self.getListValues(query.listHandle,x,max,returnAttributes).to_dict()
+        self.freeListHandles(query.listHandle)
+        return return_obj
+
     def updateObject(self, obj_handle, attribute_changes, return_attributes=None):
         attribute_changes = self.createArrayOfString(attribute_changes)
         return_attributes = self.createArrayOfString(return_attributes)
